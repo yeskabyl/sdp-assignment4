@@ -17,7 +17,7 @@ public class PostgresDatabaseManager {
         initTables();
     }
 
-    public PostgresDatabaseManager(String dbName, String user, String password) {
+    public PostgresDatabaseManager(String dbName) {
         this("localhost", 5432, dbName, user, password);
     }
 

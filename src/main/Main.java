@@ -14,14 +14,17 @@ public class Main {
         String dbUser = System.getenv().getOrDefault("DB_USER", "postgres");
         String dbPassword = System.getenv().getOrDefault("DB_PASS", "postgres");
 
-        PostgresDatabaseManager db = new PostgresDatabaseManager(dbName, dbUser, dbPassword);
+        PostgresDatabaseManager db = new PostgresDatabaseManager(dbName);
 
         SeatReservationRepository seatRepo = new SeatReservationRepository(db);
         FareCalculator fareCalculator = new FareCalculator();
+
         TicketRepository ticketRepo = new TicketRepository(db);
         BaggageRulesEngine baggageEngine = new BaggageRulesEngine();
+
         LoyaltyRepository loyaltyRepo = new LoyaltyRepository(db);
         MealPreferenceService mealService = new MealPreferenceService();
+
         ChainJournalRepository journalRepo = new ChainJournalRepository(db);
 
         BookingOrchestratorFacade orchestrator = new BookingOrchestratorFacade(
@@ -30,20 +33,26 @@ public class Main {
         AdminBookingFacade adminFacade = new AdminBookingFacade(journalRepo, seatRepo, ticketRepo, loyaltyRepo);
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("=== Flight Reservation System (PostgreSQL) Live Demo ===");
+        System.out.println("============================================================");
 
         while (true) {
-            System.out.println("\n--- Выберите действие ---");
-            System.out.println("1. Успешный заказ (Happy Path A -> B -> C)");
-            System.out.println("2. Спровоцировать сбой в B (Багаж > 32 кг) -> Откат A");
-            System.out.println("3. Спровоцировать сбой в C (Недоступное питание) -> Откат B, затем A");
-            System.out.println("4. Инспекция состояния брони в PostgreSQL");
-            System.out.println("5. Сбросить (Truncate) таблицы базы данных");
-            System.out.println("0. Выход");
+            System.out.println("""
+                
+                --- Select an Action ---
+                1. Happy Path: Execute Full Chain (A -> B -> C)
+                2. Force Step B Failure: Heavy Baggage (> 32kg) -> Unwind A
+                3. Force Step C Failure: Meal Unavailable -> Unwind B, then A
+                4. Inspect Booking by ID (Check Persisted Database State)
+                5. Reset Database to Clean State (TRUNCATE)
+                0. Exit
+                """);
             System.out.print("> ");
 
             String choice = scanner.nextLine().trim();
-            if ("0".equals(choice)) break;
+            if ("0".equals(choice)) {
+                System.out.println("Exiting application. Goodbye!");
+                break;
+            }
 
             try {
                 switch (choice) {
@@ -51,41 +60,45 @@ public class Main {
                         String id = "BKG-" + UUID.randomUUID().toString().substring(0, 6);
                         BookingRequest req = new BookingRequest(id, "KC-951", "12A", "Merey", true, 20.0, "STANDARD", 1200);
                         orchestrator.processBooking(req);
-                        System.out.println("[OK] Заказ успешно сохранен в PostgreSQL! ID: " + id);
+                        System.out.println("\n[SUCCESS] Booking completed across all subsystems! Booking ID: " + id);
                     }
                     case "2" -> {
                         String id = "BKG-" + UUID.randomUUID().toString().substring(0, 6);
+                        System.out.println("\n[DEMO] Attempting booking with 55.0kg baggage (limit: 32.0kg)...");
                         BookingRequest req = new BookingRequest(id, "KC-951", "14B", "Merey", false, 55.0, "STANDARD", 1200);
                         try {
                             orchestrator.processBooking(req);
                         } catch (Exception ex) {
-                            System.out.println("[СБОЙ В ШАГЕ B]: " + ex.getMessage());
-                            System.out.println("[ROLLBACK]: Статус брони A переведен в RELEASED в PostgreSQL! ID: " + id);
+                            System.out.println("[HANDLED EXCEPTION]: " + ex.getMessage());
+                            System.out.println("[ROLLBACK COMPLETED]: Seat reservation released (RELEASED). Ticket was never issued.");
+                            System.out.println("Inspect persisted state using ID: " + id);
                         }
                     }
                     case "3" -> {
                         String id = "BKG-" + UUID.randomUUID().toString().substring(0, 6);
+                        System.out.println("\n[DEMO] Attempting booking with EXHAUSTED_KOSHER meal option...");
                         BookingRequest req = new BookingRequest(id, "KC-951", "1A", "Merey", true, 18.0, "EXHAUSTED_KOSHER", 1200);
                         try {
                             orchestrator.processBooking(req);
                         } catch (Exception ex) {
-                            System.out.println("[СБОЙ В ШАГЕ C]: " + ex.getMessage());
-                            System.out.println("[2-STEP ROLLBACK]: Билет B аннулирован (VOIDED) -> Бронь A снята (RELEASED)! ID: " + id);
+                            System.out.println("[HANDLED EXCEPTION]: " + ex.getMessage());
+                            System.out.println("[TWO-STEP ROLLBACK COMPLETED]: Ticket voided (VOIDED) -> Seat released (RELEASED)!");
+                            System.out.println("Inspect persisted state using ID: " + id);
                         }
                     }
                     case "4" -> {
-                        System.out.print("Введите ID бронирования (например, BKG-xxxxxx): ");
+                        System.out.print("\nEnter Booking ID (e.g., BKG-xxxxxx): ");
                         String bId = scanner.nextLine().trim();
                         System.out.println(adminFacade.inspectBooking(bId));
                     }
                     case "5" -> {
                         db.cleanAllData();
-                        System.out.println("[CLEAN] Все таблицы PostgreSQL очищены (TRUNCATE).");
+                        System.out.println("\n[CLEAN] All database tables truncated successfully.");
                     }
-                    default -> System.out.println("Неверный пункт.");
+                    default -> System.out.println("Invalid selection. Please choose an option between 0 and 5.");
                 }
             } catch (Exception e) {
-                System.out.println("[ERROR] " + e.getMessage());
+                System.out.println("[SYSTEM ERROR] " + e.getMessage());
             }
         }
     }

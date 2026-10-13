@@ -1,5 +1,6 @@
 package subsystem_a_seat;
 
+import persistence.PostgresDatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 
