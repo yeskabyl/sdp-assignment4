@@ -6,23 +6,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class PostgresDatabaseManager {
-    private final String url;
-    private final String user;
-    private final String password;
+    private String url;
 
-    public PostgresDatabaseManager(String host, int port, String dbName, String user, String password) {
+    public PostgresDatabaseManager(String host, int port, String dbName) {
         this.url = String.format("jdbc:postgresql://%s:%d/%s", host, port, dbName);
-        this.user = user;
-        this.password = password;
         initTables();
     }
 
     public PostgresDatabaseManager(String dbName) {
-        this("localhost", 5432, dbName, user, password);
+        this("localhost", 5432, dbName);
     }
 
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, user, password);
+        return DriverManager.getConnection(url);
     }
 
     public void initTables() {
