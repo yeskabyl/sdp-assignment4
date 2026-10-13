@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class PostgresDatabaseManager {
-    private String url;
+    private final String url;
 
     public PostgresDatabaseManager(String host, int port, String dbName) {
         this.url = String.format("jdbc:postgresql://%s:%d/%s", host, port, dbName);
