@@ -14,7 +14,7 @@ public class Main {
         String dbUser = System.getenv().getOrDefault("DB_USER", "postgres");
         String dbPassword = System.getenv().getOrDefault("DB_PASS", "postgres");
 
-        PostgresDatabaseManager db = new PostgresDatabaseManager(dbName);
+        PostgresDatabaseManager db = new PostgresDatabaseManager(dbName, dbUser, dbPassword);
 
         SeatReservationRepository seatRepo = new SeatReservationRepository(db);
         FareCalculator fareCalculator = new FareCalculator();
