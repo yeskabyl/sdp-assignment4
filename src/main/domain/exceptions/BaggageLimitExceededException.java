@@ -1,4 +1,4 @@
-package domain.exceptions;
+package main.domain.exceptions;
 
 public class BaggageLimitExceededException extends BookingException {
     public BaggageLimitExceededException(double weight) {

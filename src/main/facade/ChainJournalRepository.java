@@ -1,14 +1,14 @@
-package facade;
+package main.facade;
 
-import domain.ChainState;
-import persistence.PostgresDatabaseManager;
+import main.domain.ChainState;
+import main.persistence.DatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 
 public class ChainJournalRepository {
-    private final PostgresDatabaseManager db;
+    private final DatabaseManager db;
 
-    public ChainJournalRepository(PostgresDatabaseManager db) {
+    public ChainJournalRepository(DatabaseManager db) {
         this.db = db;
     }
 

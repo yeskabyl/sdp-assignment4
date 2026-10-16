@@ -1,13 +1,13 @@
-package subsystem_c_loyalty;
+package main.subsystem_c_loyalty;
 
-import persistence.PostgresDatabaseManager;
+import main.persistence.DatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 
 public class LoyaltyRepository {
-    private final PostgresDatabaseManager db;
+    private final DatabaseManager db;
 
-    public LoyaltyRepository(PostgresDatabaseManager db) {
+    public LoyaltyRepository(DatabaseManager db) {
         this.db = db;
     }
 

@@ -1,9 +1,9 @@
-package facade;
+package main.facade;
 
-import domain.ChainState;
-import subsystem_a_seat.*;
-import subsystem_b_ticket.*;
-import subsystem_c_loyalty.*;
+import main.domain.ChainState;
+import main.subsystem_a_seat.*;
+import main.subsystem_b_ticket.*;
+import main.subsystem_c_loyalty.*;
 
 public class AdminBookingFacade {
     private final ChainJournalRepository journalRepo;

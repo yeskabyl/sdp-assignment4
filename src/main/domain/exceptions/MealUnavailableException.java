@@ -1,4 +1,4 @@
-package domain.exceptions;
+package main.domain.exceptions;
 
 public class MealUnavailableException extends BookingException {
     public MealUnavailableException(String meal) {

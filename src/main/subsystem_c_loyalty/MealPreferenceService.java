@@ -1,6 +1,6 @@
-package subsystem_c_loyalty;
+package main.subsystem_c_loyalty;
 
-import domain.exceptions.MealUnavailableException;
+import main.domain.exceptions.MealUnavailableException;
 
 public class MealPreferenceService {
     public void verifyMealAvailability(String mealType) throws MealUnavailableException {

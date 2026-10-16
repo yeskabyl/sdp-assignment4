@@ -1,13 +1,13 @@
-package subsystem_b_ticket;
+package main.subsystem_b_ticket;
 
-import persistence.PostgresDatabaseManager;
+import main.persistence.DatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 
 public class TicketRepository {
-    private final PostgresDatabaseManager db;
+    private final DatabaseManager db;
 
-    public TicketRepository(PostgresDatabaseManager db) {
+    public TicketRepository(DatabaseManager db) {
         this.db = db;
     }
 

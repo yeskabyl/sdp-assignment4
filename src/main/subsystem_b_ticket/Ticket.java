@@ -1,4 +1,4 @@
-package subsystem_b_ticket;
+package main.subsystem_b_ticket;
 
 public class Ticket {
     private final String id;

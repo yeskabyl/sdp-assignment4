@@ -1,13 +1,13 @@
-package subsystem_a_seat;
+package main.subsystem_a_seat;
 
-import persistence.PostgresDatabaseManager;
+import main.persistence.DatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 
 public class SeatReservationRepository {
-    private final PostgresDatabaseManager db;
+    private final DatabaseManager db;
 
-    public SeatReservationRepository(PostgresDatabaseManager db) {
+    public SeatReservationRepository(DatabaseManager db) {
         this.db = db;
     }
 

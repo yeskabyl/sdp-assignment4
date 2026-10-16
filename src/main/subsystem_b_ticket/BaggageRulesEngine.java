@@ -1,6 +1,6 @@
-package subsystem_b_ticket;
+package main.subsystem_b_ticket;
 
-import domain.exceptions.BaggageLimitExceededException;
+import main.domain.exceptions.BaggageLimitExceededException;
 
 public class BaggageRulesEngine {
     public static final double MAX_ALLOWED_WEIGHT = 32.0;
