@@ -16,19 +16,16 @@ public class SeatReservationTest {
         SeatReservation res = new SeatReservation("RES-101", "KC-951", "12A", "Merey", 155.0);
         assertEquals(SeatReservationStatus.CREATED, res.getStatus());
 
-        // Переход CREATED -> RELEASED недопустим
         assertThrows(IllegalStateException.class, res::release);
 
         res.hold();
         assertEquals(SeatReservationStatus.HELD, res.getStatus());
 
-        // Повторный hold из HELD недопустим
         assertThrows(IllegalStateException.class, res::hold);
 
         res.release();
         assertEquals(SeatReservationStatus.RELEASED, res.getStatus());
 
-        // Повторный release недопустим
         assertThrows(IllegalStateException.class, res::release);
     }
 

@@ -17,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BookingOrchestratorPostgresTest {
     private static final String DB_NAME = System.getenv().getOrDefault("DB_NAME", "flight_reservation");
+    private static final String DB_USER = System.getenv().getOrDefault("DB_USER", "postgres");
+    private static final String DB_PASS = System.getenv().getOrDefault("DB_PASS", "postgres");
 
     private PostgresDatabaseManager db;
     private SeatReservationRepository seatRepo;
@@ -30,8 +32,8 @@ public class BookingOrchestratorPostgresTest {
 
     @BeforeEach
     void setUp() {
-        db = new PostgresDatabaseManager(DB_NAME);
-        db.cleanAllData(); // F.I.R.S.T.: очистка таблиц перед каждым тестом
+        db = new PostgresDatabaseManager(DB_NAME, DB_USER, DB_PASS);
+        db.cleanAllData();
 
         seatRepo = new SeatReservationRepository(db);
         fareCalculator = new FareCalculator();
@@ -120,8 +122,7 @@ public class BookingOrchestratorPostgresTest {
     void testPersistenceSurvivesRestart() {
         givenBooking("PG-RELOAD").executesSuccessfully();
 
-        // Симуляция перезапуска приложения и считывания данных из PostgreSQL новым экземпляром
-        PostgresDatabaseManager freshDb = new PostgresDatabaseManager(DB_NAME);
+        PostgresDatabaseManager freshDb = new PostgresDatabaseManager(DB_NAME, DB_USER, DB_PASS);
         SeatReservationRepository freshSeatRepo = new SeatReservationRepository(freshDb);
         TicketRepository freshTicketRepo = new TicketRepository(freshDb);
 
