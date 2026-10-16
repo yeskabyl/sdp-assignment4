@@ -20,28 +20,24 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BookingOrchestratorFacadeTest {
     private static final String TEST_DB_PATH = "target/test_flights.db";
 
-    private DatabaseManager db;
     private SeatReservationRepository seatRepo;
-    private FareCalculator fareCalculator;
     private TicketRepository ticketRepo;
-    private BaggageRulesEngine baggageEngine;
     private LoyaltyRepository loyaltyRepo;
-    private MealPreferenceService mealService;
     private ChainJournalRepository journalRepo;
     private BookingOrchestratorFacade facade;
 
     @BeforeEach
     void setUp() {
         new File("target").mkdirs();
-        db = new DatabaseManager(TEST_DB_PATH);
+        DatabaseManager db = new DatabaseManager(TEST_DB_PATH);
         db.cleanAllData();
 
         seatRepo = new SeatReservationRepository(db);
-        fareCalculator = new FareCalculator();
+        FareCalculator fareCalculator = new FareCalculator();
         ticketRepo = new TicketRepository(db);
-        baggageEngine = new BaggageRulesEngine();
+        BaggageRulesEngine baggageEngine = new BaggageRulesEngine();
         loyaltyRepo = new LoyaltyRepository(db);
-        mealService = new MealPreferenceService();
+        MealPreferenceService mealService = new MealPreferenceService();
         journalRepo = new ChainJournalRepository(db);
 
         facade = new BookingOrchestratorFacade(
@@ -49,7 +45,6 @@ public class BookingOrchestratorFacadeTest {
         );
     }
 
-    // --- Domain-Specific Testing DSL ---
     private BookingScenarioBuilder givenBooking(String bookingId) {
         return new BookingScenarioBuilder(bookingId);
     }
