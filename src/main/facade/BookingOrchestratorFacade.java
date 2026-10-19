@@ -1,11 +1,11 @@
-package main.facade;
+package facade;
 
-import main.domain.BookingRequest;
-import main.domain.ChainState;
-import main.domain.exceptions.BookingException;
-import main.subsystem_a_seat.*;
-import main.subsystem_b_ticket.*;
-import main.subsystem_c_loyalty.*;
+import domain.BookingRequest;
+import domain.ChainState;
+import domain.exceptions.BookingException;
+import subsystem_a_seat.*;
+import subsystem_b_ticket.*;
+import subsystem_c_loyalty.*;
 
 public class BookingOrchestratorFacade {
     private final SeatReservationRepository seatRepo;

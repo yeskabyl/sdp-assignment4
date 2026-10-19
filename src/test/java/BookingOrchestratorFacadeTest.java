@@ -1,13 +1,13 @@
-import main.domain.BookingRequest;
-import main.domain.ChainState;
-import main.domain.exceptions.BaggageLimitExceededException;
-import main.domain.exceptions.MealUnavailableException;
-import main.facade.BookingOrchestratorFacade;
-import main.facade.ChainJournalRepository;
-import main.persistence.DatabaseManager;
-import main.subsystem_a_seat.*;
-import main.subsystem_b_ticket.*;
-import main.subsystem_c_loyalty.*;
+import domain.BookingRequest;
+import domain.ChainState;
+import domain.exceptions.BaggageLimitExceededException;
+import domain.exceptions.MealUnavailableException;
+import facade.BookingOrchestratorFacade;
+import facade.ChainJournalRepository;
+import persistence.DatabaseManager;
+import subsystem_a_seat.*;
+import subsystem_b_ticket.*;
+import subsystem_c_loyalty.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -51,13 +51,13 @@ public class BookingOrchestratorFacadeTest {
 
     private class BookingScenarioBuilder {
         private final String bookingId;
-        private String flight = "KC-951";
-        private String seat = "10A";
-        private String passenger = "John Doe";
-        private boolean preferredSeat = false;
+        private final String flight = "KC-951";
+        private final String seat = "10A";
+        private final String passenger = "John Doe";
+        private final boolean preferredSeat = false;
         private double luggageWeight = 20.0;
         private String meal = "STANDARD";
-        private int distance = 1000;
+        private final int distance = 1000;
 
         public BookingScenarioBuilder(String id) { this.bookingId = id; }
         public BookingScenarioBuilder withBaggageWeight(double weight) { this.luggageWeight = weight; return this; }

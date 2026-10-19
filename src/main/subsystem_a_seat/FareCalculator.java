@@ -1,4 +1,4 @@
-package main.subsystem_a_seat;
+package subsystem_a_seat;
 
 public class FareCalculator {
     private static final double BASE_FARE = 120.0;

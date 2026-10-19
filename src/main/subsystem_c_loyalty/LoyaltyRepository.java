@@ -1,6 +1,6 @@
-package main.subsystem_c_loyalty;
+package subsystem_c_loyalty;
 
-import main.persistence.DatabaseManager;
+import persistence.DatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 

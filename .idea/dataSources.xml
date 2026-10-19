@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="flight_booking_demo" uuid="df7a8262-6f1e-49f0-bb7a-e2fb9f746c89">
+    <data-source source="LOCAL" name="flight_booking_demo" uuid="be6ee4d2-5b88-4b92-b484-7d01de3449cf">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:flight_booking_demo</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/target/flight_booking_demo.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

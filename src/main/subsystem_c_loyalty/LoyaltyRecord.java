@@ -1,4 +1,4 @@
-package main.subsystem_c_loyalty;
+package subsystem_c_loyalty;
 
 public class LoyaltyRecord {
     private final String id;

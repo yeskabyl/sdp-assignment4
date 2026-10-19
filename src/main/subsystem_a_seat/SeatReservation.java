@@ -1,4 +1,4 @@
-package main.subsystem_a_seat;
+package subsystem_a_seat;
 
 public class SeatReservation {
     private final String id;

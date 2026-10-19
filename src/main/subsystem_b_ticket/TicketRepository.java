@@ -1,6 +1,6 @@
-package main.subsystem_b_ticket;
+package subsystem_b_ticket;
 
-import main.persistence.DatabaseManager;
+import persistence.DatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 

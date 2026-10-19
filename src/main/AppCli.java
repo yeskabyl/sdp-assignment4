@@ -1,11 +1,9 @@
-package main;
-
-import main.domain.BookingRequest;
-import main.facade.*;
-import main.persistence.DatabaseManager;
-import main.subsystem_a_seat.*;
-import main.subsystem_b_ticket.*;
-import main.subsystem_c_loyalty.*;
+import domain.BookingRequest;
+import facade.*;
+import persistence.DatabaseManager;
+import subsystem_a_seat.*;
+import subsystem_b_ticket.*;
+import subsystem_c_loyalty.*;
 
 import java.util.Scanner;
 import java.util.UUID;

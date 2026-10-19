@@ -1,6 +1,6 @@
-package main.subsystem_a_seat;
+package subsystem_a_seat;
 
-import main.persistence.DatabaseManager;
+import persistence.DatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 

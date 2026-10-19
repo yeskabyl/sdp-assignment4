@@ -1,7 +1,7 @@
-package main.facade;
+package facade;
 
-import main.domain.ChainState;
-import main.persistence.DatabaseManager;
+import domain.ChainState;
+import persistence.DatabaseManager;
 import java.sql.*;
 import java.util.Optional;
 

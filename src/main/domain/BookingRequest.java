@@ -1,4 +1,4 @@
-package main.domain;
+package domain;
 
 public record BookingRequest(
         String bookingId,
