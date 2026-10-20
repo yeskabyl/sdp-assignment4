@@ -99,17 +99,14 @@ public class BookingOrchestratorFacadeTest {
     @DisplayName("Depth 1 Compensation: B fails (baggage exceeded) -> Unwinds A alone")
     void testFailureAtStepBCompensatesStepA() {
         givenBooking("BKG-200")
-                .withBaggageWeight(55.0) // Лимит 32 кг
+                .withBaggageWeight(55.0)
                 .executeExpectingFailure(BaggageLimitExceededException.class);
 
-        // Subsystem A должно быть сохранено и переведено в статус RELEASED
         SeatReservation seat = seatRepo.findById("RES-BKG-200").orElseThrow();
         assertEquals(SeatReservationStatus.RELEASED, seat.getStatus());
 
-        // Subsystem B не должно иметь зафиксированного билета
         assertTrue(ticketRepo.findById("TKT-BKG-200").isEmpty());
 
-        // Статус в журнале оркестратора
         ChainJournalRepository.JournalEntry journal = journalRepo.findByBookingId("BKG-200").orElseThrow();
         assertEquals(ChainState.COMPENSATED, journal.state());
     }
@@ -121,15 +118,12 @@ public class BookingOrchestratorFacadeTest {
                 .withMeal("EXHAUSTED_KOSHER")
                 .executeExpectingFailure(MealUnavailableException.class);
 
-        // Subsystem B было выпущено, но откачено в VOIDED
         Ticket ticket = ticketRepo.findById("TKT-BKG-300").orElseThrow();
         assertEquals(TicketStatus.VOIDED, ticket.getStatus());
 
-        // Subsystem A откачено в RELEASED
         SeatReservation seat = seatRepo.findById("RES-BKG-300").orElseThrow();
         assertEquals(SeatReservationStatus.RELEASED, seat.getStatus());
 
-        // Журнал зафиксировал полный откат
         ChainJournalRepository.JournalEntry journal = journalRepo.findByBookingId("BKG-300").orElseThrow();
         assertEquals(ChainState.COMPENSATED, journal.state());
     }
@@ -139,7 +133,6 @@ public class BookingOrchestratorFacadeTest {
     void testPersistenceSurvivesRestart() {
         givenBooking("BKG-400").executeSuccessfully();
 
-        // Симулируем перезапуск приложения: создаем новый DatabaseManager и новые репозитории поверх того же файла
         DatabaseManager restartedDb = new DatabaseManager(TEST_DB_PATH);
         SeatReservationRepository reloadedSeatRepo = new SeatReservationRepository(restartedDb);
         TicketRepository reloadedTicketRepo = new TicketRepository(restartedDb);
