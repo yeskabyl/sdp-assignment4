@@ -53,7 +53,7 @@ public class BookingOrchestratorFacadeTest {
         private final String bookingId;
         private final String flight = "KC-951";
         private final String seat = "10A";
-        private final String passenger = "John Doe";
+        private final String passenger = "Kairat Nurtas";
         private final boolean preferredSeat = false;
         private double luggageWeight = 20.0;
         private String meal = "STANDARD";
